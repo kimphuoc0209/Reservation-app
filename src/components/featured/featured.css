@@ -19,6 +19,6 @@
 }
 .featuredTitle {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 0px;
+  left: 10px;
 }
