@@ -4,9 +4,13 @@ import Header from "../../components/header/Header"
 import MailList from "../../components/mailList/MailList"
 import Footer from "../../components/footer/Footer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons"
+import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
 
 const Hotel = () => {
+  const [slideNumber, setSlideNumber] = useState(0)
+  const [open, setOpen] = useState(false)
+
   const photos = [
     {
       src: "https://t-cf.bstatic.com/xdata/images/hotel/max1024x768/120941786.jpg?k=20e8175989bd0e83e8f91ce56f65a48bb324d41525de6075183dd19d0586521f&o=&hp=1"
@@ -27,11 +31,24 @@ const Hotel = () => {
       src: "https://t-cf.bstatic.com/xdata/images/hotel/max1024x768/123589354.jpg?k=4ab29ff218334100f637d64427a070f9eb356c4f4ab85c9e935aa8146382fdf4&o=&hp=1"
     }
   ]
+
+  const handleOpen = (i) => {
+    setSlideNumber(i);
+    setOpen(true);
+  }
   return (
     <div>
       <Navbar />
       <Header type="list" />
       <div className="hotelContainer">
+        {open && <div className="slider">
+          <FontAwesomeIcon icon={faCircleXmark} className="close" onClick={() => setOpen(false)} />
+          <FontAwesomeIcon icon={faCircleArrowLeft} className="arrow" />
+          <div className="sliderWrapper">
+            <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+          </div>
+          <FontAwesomeIcon icon={faCircleArrowRight} className="arrow" />
+        </div>}
         <div className="hotelWrapper">
           <button className="bookNow">Reserve or Book Now!</button>
           <h1 className="hotelTitle">A&EM Art Hotel</h1>
@@ -46,9 +63,9 @@ const Hotel = () => {
             Book a stay over $114 at this property and get a free airport taxi
           </span>
           <div className="hotelImages">
-            {photos.map(photo => (
+            {photos.map((photo, i) => (
               <div className="hotelImgWrapper">
-                <img src={photo.src} alt="" className="hotelImg" />
+                <img onClick={() => handleOpen(i)} src={photo.src} alt="" className="hotelImg" />
               </div>
             ))}
 
